@@ -1,12 +1,7 @@
-import { useEffect, useState } from "react"
 import "./styles/main.css"
-import * as Dialog from "@radix-ui/react-dialog"
-
-import GamesCarousel from "./components/GamesCarousel"
-import CreateAdBanner from "./components/CreateAdBanner"
-import Logo from "./components/Logo"
-import CreateAdModal from "./components/CreateAdModal"
-import axios from "axios"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import GameAds from "./components/GameAds";
 
 export interface GameProps {
     id: string;
@@ -17,32 +12,14 @@ export interface GameProps {
     }
 }
 
-function App() {
-    const [gamesArray, setGamesArray] = useState<GameProps[]>([])
-
-    useEffect(() => {
-        axios("http://localhost:3333/games").then(response => {
-            setGamesArray(response.data)
-        })
-    }, [])
-    
+function App() {    
     return (
-        <div className="max-w-[1344px] mx-auto flex flex-col items-center my-20">
-            <Logo />
-
-            <h1 className="text-6xl text-white font-black mt-20">
-                Seu <span className="bg-nlw-gradient bg-clip-text text-transparent">duo</span> está aqui.
-            </h1>
-
-            <GamesCarousel games={gamesArray} />
-
-            <Dialog.Root>
-                <CreateAdBanner />
-                        
-                <CreateAdModal games={gamesArray} />
-            </Dialog.Root>
-            
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/game/:id/ads" element={<GameAds />} />
+            </Routes>
+        </BrowserRouter>
     )
 }
 

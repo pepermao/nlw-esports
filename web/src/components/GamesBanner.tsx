@@ -1,7 +1,15 @@
-const GamesBanner = ({title, bannerUrl, adsCount}) => {
+import { useNavigate } from "react-router-dom"
+
+const GamesBanner = ({title, bannerUrl, adsCount, id, games}) => {
+    const navigate = useNavigate();
+
+    const handleClick = (id) => {
+        navigate(`/game/${id}/ads`, {state: { name: title, games}});
+    }
+
     return (
         <div>
-            <a href="" className="relative rounded-lg overflow-hidden">
+            <a href={`/game/${id}/ads`} onClick={() => handleClick(id)} className="relative rounded-lg overflow-hidden">
                 <img src={bannerUrl} alt="logo" />
 
                 <div className="w-full pt-16 pb-4 px-4 bg-game-gradient absolute bottom-0 right-0 left-0">
